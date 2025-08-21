@@ -2,7 +2,6 @@
 # Jason Graham
 
 import json
-import adder
 import boto3
 import botocore
 import requests
@@ -34,6 +33,7 @@ def lambda_whoami():
     ### output something to test
     string = json.dumps(datalist, indent=4)
     return string
+
 
 
 
