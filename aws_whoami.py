@@ -2,8 +2,6 @@
 # Jason Graham
 
 import json
-import boto3
-import botocore
 import requests
 
 
@@ -27,12 +25,22 @@ def lambda_whoami():
             return ip_address
         else:
             print("Could not retrieve public IP address.")
+			
     # with lambda api
     datalist = {}
     datalist[host1] = requests.get('http://checkip.amazonaws.com').text.rstrip()
     ### output something to test
     string = json.dumps(datalist, indent=4)
     return string
+	
+def lambda_handler(event, context):
+    # output the whoami info in json
+    output = lambda_whoami()
+    return {
+        'statusCode': 200,
+        'body': json.dumps(output)
+    }
+
 
 
 
