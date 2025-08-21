@@ -28,15 +28,13 @@ def lambda_whoami():
             return ip_address
         else:
             print("Could not retrieve public IP address.")
-			
-	# with lambda api
-	# return requests.get('http://checkip.amazonaws.com').text.rstrip()
-	
-### output something to screen to test
+    # with lambda api
+    datalist = {}
+    datalist[host1] = requests.get('http://checkip.amazonaws.com').text.rstrip()
+    ### output something to test
+    string = json.dumps(datalist, indent=4)
+    return string
 
-# adder output
-string = json.dumps(datalist, indent=4)
-print(string)
 
 
 
