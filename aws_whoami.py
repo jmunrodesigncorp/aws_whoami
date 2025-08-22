@@ -2,13 +2,18 @@
 # Jason Graham
 
 import json
+import boto3
 import requests
 
+## aws get whoami information from role
+def get_aws_whoami():
+    sts = boto3.client("sts")
+    identity = sts.get_caller_identity()
+    return identity.get('Arn')
 
-		
 ### AWS lambda whoami
 def lambda_whoami():
-
+    dictoutput = {}
     # normal python, no aws:
     try:
         # Using a service that returns the public IP address in plain text
@@ -29,10 +34,15 @@ def lambda_whoami():
     # with lambda api
     datalist = {}
     datalist[host1] = requests.get('http://checkip.amazonaws.com').text.rstrip()
-    ### output something to test
+    
+	### output something to test basic
     string = json.dumps(datalist, indent=4)
+
+    #get all output to json format
+    dictoutput["aws_whoami"] = get_aws_whoami()
+    string = json.dumps(dictoutput, indent=4)
     return string
-	
+
 def lambda_handler(event, context):
     # output the whoami info in json
     output = lambda_whoami()
@@ -40,6 +50,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps(output)
     }
+
 
 
 
