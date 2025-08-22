@@ -27,7 +27,7 @@ def lambda_whoami():
     if __name__ == "__main__":
         ip_address = get_public_ip_address()
         if ip_address:
-            return ip_address
+            dictoutput["ip_address"] = ip_address
         else:
             print("Could not retrieve public IP address.")
 			
@@ -50,6 +50,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps(output)
     }
+
 
 
 
