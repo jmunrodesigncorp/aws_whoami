@@ -3,7 +3,7 @@
 
 import json
 import boto3
-import requests
+import from urllib.request import Request, urlopen
 
 ## aws get whoami information from role
 def get_aws_whoami():
@@ -33,13 +33,17 @@ def lambda_whoami():
 			
     # with lambda api
     datalist = {}
-    datalist[host1] = requests.get('http://checkip.amazonaws.com').text.rstrip()
+    datalist[host1] = 
     
 	### output something to test basic
     string = json.dumps(datalist, indent=4)
 
     #get all output to json format
     dictoutput["aws_whoami"] = get_aws_whoami()
+	url = 'http://checkip.amazonaws.com'
+    with urlopen(Request(url)) as response:
+        public_ip = response.read().decode('utf-8').strip()
+    dictoutput["public_ip"] = public_ip
     string = json.dumps(dictoutput, indent=4)
     return string
 
@@ -50,6 +54,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps(output)
     }
+
 
 
 
